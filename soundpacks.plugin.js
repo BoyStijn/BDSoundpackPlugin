@@ -21,9 +21,6 @@ class SoundPack {
     }
 
     start() {
-        document.querySelectorAll('.side-8zPYf6').forEach(node => {
-            console.log(node)
-          });
         // Extracted from Samogot's LibDiscordInternals for BetterDiscord.
         const req = typeof(webpackJsonp) === "function" ? webpackJsonp([], {
             '__extra_id__': (module, exports, req) => exports.default = req
