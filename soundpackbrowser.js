@@ -1,17 +1,174 @@
-/**
- * @name SoundPack
- * @version 1.0.0
- * @description Enables discord april fools soundpack feature and allows for custom sound packs
- * @author BOYStijn
- * 
- * 
- */
+( () => {
+    let packs = {}
+    /* ENTER HERE YOUR CUSTOM PACKS*/
+    packs["TEAMSPEAK"] = {
+        classname: "TEAMSPEAK",
+        label: "TeamSpeak",
+        sounddata: {
+            discodo: null,
+            message1: null,
+            deafen: "https://cdn.discordapp.com/attachments/747533263341486212/839507475220660304/sound-muted.mp3",
+            undeafen: "https://cdn.discordapp.com/attachments/747533263341486212/839507472595025951/sound-resumed.mp3",
+            mute: "https://cdn.discordapp.com/attachments/747533263341486212/839507482506166272/microphone-muted.mp3",
+            unmute: "https://cdn.discordapp.com/attachments/747533263341486212/839507479951835186/microphone-activated.mp3",
+            disconnect: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
+            ptt_start: null,
+            ptt_stop: null,
+            user_join: "https://cdn.discordapp.com/attachments/747533263341486212/839447031898570752/User_joined_your_channel_sound_xd.mp3",
+            user_leave: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
+            user_moved: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
+            call_calling: "https://cdn.discordapp.com/attachments/747533263341486212/839508147885703218/team-speak.mp3",
+            call_ringing: "https://cdn.discordapp.com/attachments/747533263341486212/839508089312247809/hey-wake-up.mp3",
+            stream_started: "https://cdn.discordapp.com/attachments/747533263341486212/839507465107800074/user-in-your-channel-started-recording.mp3",
+            stream_ended: "https://cdn.discordapp.com/attachments/747533263341486212/839507467536695396/user-in-your-channel-stopped-recording.mp3",
+            stream_user_joined: "https://cdn.discordapp.com/attachments/747533263341486212/839447031898570752/User_joined_your_channel_sound_xd.mp3",
+            stream_user_left: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3"
+        }
+    }
 
- let labelarray = [];
- let soundmap = {};
- let soundloclist = {};
+    /* DO NOT EDIT CODE UNDERNEATH UNLESS YOU KNOW WHAT YOU"RE DOING*/
 
-class SoundPack {
+    const WebpackModules = (() => {
+
+        const req = typeof (webpackJsonp) === "function" ? webpackJsonp([], {
+            '__extra_id__': (module, exports, req) => exports.default = req
+        }, ['__extra_id__']).default : webpackJsonp.push([[], {
+            '__extra_id__': (module, exports, req) => module.exports = req
+        }, [['__extra_id__']]]);
+        delete req.m['__extra_id__'];
+        delete req.c['__extra_id__'];
+    
+        /**
+         * Predicate for searching module
+         * @callback modulePredicate
+         * @param {*} module Module to test
+         * @return {boolean} Returns `true` if `module` matches predicate.
+         */
+    
+        /**
+         * Look through all modules of internal Discord's Webpack and return first one that matches filter predicate.
+         * At first this function will look through already loaded modules cache. If no loaded modules match, then this function tries to load all modules and match for them. Loading any module may have unexpected side effects, like changing current locale of moment.js, so in that case there will be a warning the console. If no module matches, this function returns `null`. You should always try to provide a predicate that will match something, but your code should be ready to receive `null` in case of changes in Discord's codebase.
+         * If module is ES6 module and has default property, consider default first; otherwise, consider the full module object.
+         * @param {modulePredicate} filter Predicate to match module
+         * @param {object} [options] Options object.
+         * @param {boolean} [options.cacheOnly=false] Set to `true` if you want to search only the cache for modules.
+         * @return {*} First module that matches `filter` or `null` if none match.
+         */
+        const find = (filter, options = {}) => {
+            const {cacheOnly = true} = options;
+            for (let i in req.c) {
+                if (req.c.hasOwnProperty(i)) {
+                    let m = req.c[i].exports;
+                    if (m && m.__esModule && m.default && filter(m.default))
+                        return m.default;
+                    if (m && filter(m))
+                        return m;
+                }
+            }
+            if (cacheOnly) {
+                console.warn('Cannot find loaded module in cache');
+                return null;
+            }
+            console.warn('Cannot find loaded module in cache. Loading all modules may have unexpected side effects');
+            for (let i = 0; i < req.m.length; ++i) {
+                try {
+                    let m = req(i);
+                    if (m && m.__esModule && m.default && filter(m.default))
+                        return m.default;
+                    if (m && filter(m))
+                        return m;
+                } catch (e) {
+                }
+            }
+            console.warn('Cannot find module');
+            return null;
+        };
+    
+        const findAll = (filter, options = {}) => {
+            let list = []
+            const {cacheOnly = true} = options;
+            for (let i in req.c) {
+                if (req.c.hasOwnProperty(i)) {
+                    let m = req.c[i].exports;
+                    if (m && m.__esModule && m.default && filter(m.default))
+                        list.push(m.default);
+                    if (m && filter(m))
+                    list.push(m);
+                }
+            }
+            if (cacheOnly && list.length < 1) {
+                console.warn('Cannot find loaded module in cache');
+                return list;
+            }
+            if (list.length >= 1) return list;
+            console.warn('Cannot find loaded module in cache. Loading all modules may have unexpected side effects');
+            for (let i = 0; i < req.m.length; ++i) {
+                try {
+                    let m = req(i);
+                    if (m && m.__esModule && m.default && filter(m.default))
+                        list.push(m.default);
+                    if (m && filter(m))
+                        list.push(m);
+                } catch (e) {
+                }
+            }
+            if (list.length < 1) console.warn('Cannot find module');
+            return list;
+        };
+    
+        /**
+         * Look through all modules of internal Discord's Webpack and return first object that has all of following properties. You should be ready that in any moment, after Discord update, this function may start returning `null` (if no such object exists anymore) or even some different object with the same properties. So you should provide all property names that you use, and often even some extra properties to make sure you'll get exactly what you want.
+         * @see Read {@link find} documentation for more details how search works
+         * @param {string[]} propNames Array of property names to look for
+         * @param {object} [options] Options object to pass to {@link find}.
+         * @return {object} First module that matches `propNames` or `null` if none match.
+         */
+        const findByUniqueProperties = (propNames, options) => find(module => propNames.every(prop => module[prop] !== undefined), options);
+    
+        /**
+         * Look through all modules of internal Discord's Webpack and return first object that has `displayName` property with following value. This is useful for searching for React components by name. Take into account that not all components are exported as modules. Also, there might be several components with the same name.
+         * @see Use {@link ReactComponents} as another way to get react components
+         * @see Read {@link find} documentation for more details how search works
+         * @param {string} displayName Display name property value to look for
+         * @param {object} [options] Options object to pass to {@link find}.
+         * @return {object} First module that matches `displayName` or `null` if none match.
+         */
+        const findByDisplayName = (displayName, options) => find(module => module.displayName === displayName, options);
+    
+        const findConfig = (displayName, options) => {
+            let list = [];
+            for (let module of findAll(module => module["getCurrentConfig"] !== undefined, options)) {
+                if (module.getCurrentConfig({})[displayName] !== undefined) list.push(module);
+            }
+            if (list.length == 1) return list[0]
+            return list
+        }
+    
+        return {find, findByUniqueProperties, findByDisplayName, findAll, findConfig, req};
+    
+    })();
+    
+    const React = WebpackModules.findByUniqueProperties(['Component', 'PureComponent', 'Children', 'createElement', 'cloneElement']);
+    const ce = React.createElement;
+    const Markdown = WebpackModules.findByDisplayName("Markdown");
+    const classes = Object.assign({}, WebpackModules.findByUniqueProperties(["container", "added"]), WebpackModules.findByUniqueProperties(["justifyCenter"]), WebpackModules.findByUniqueProperties(["userSelectNone"]), WebpackModules.findByUniqueProperties(["flexChild"]), WebpackModules.findByUniqueProperties(["h5"]), WebpackModules.findByUniqueProperties(["colorStandard"]), WebpackModules.findByUniqueProperties(["button"]), WebpackModules.findByUniqueProperties(["size14"]), WebpackModules.findByUniqueProperties(["subtitle", "header"]), WebpackModules.findByUniqueProperties(["soundRow"]), WebpackModules.findByUniqueProperties(["multiInputLast"]), WebpackModules.findByUniqueProperties(["guildInfo"]), WebpackModules.findByUniqueProperties(["inputDefault"]));
+    const premadeelements = WebpackModules.findByUniqueProperties(["Child"]);
+    const Titles = WebpackModules.findByUniqueProperties(["Tags", "default"]);
+    const popuptemplate = WebpackModules.find((m => m.defaultProps && m.defaultProps.selectable == false));
+    const modelstack = WebpackModules.findByUniqueProperties(["push", "update", "pop", "popWithKey"]);
+    const Direction = WebpackModules.findByUniqueProperties(["Direction"]).Direction
+    const resolveElement = function(node) {try {if (!(node instanceof window.jQuery) && !(node instanceof Element)) return undefined; return node instanceof window.jQuery ? node[0] : node;}catch {return node;}}
+    const getReactInstance = function (node) {
+        const domNode = resolveElement(node);
+        if (!(domNode instanceof Element)) return undefined;
+        return domNode[Object.keys(domNode).find((key) => key.startsWith("__reactInternalInstance") || key.startsWith("__reactFiber"))];
+    }
+
+    let labelarray = [];
+    let soundmap = {};
+    let soundloclist = {};
+
+    class SoundPack {
 
     getName() {
         return "SoundPack"
@@ -357,41 +514,7 @@ class SoundPack {
     }
 
     readSoundpacks() {
-        let data = BdApi.loadData("SoundPack", "packs");
-        if (data == undefined) { 
-            data = this.getDefaultData();
-        }
-        return data;
-    }
-
-    getDefaultData() {
-        const data = {}
-        data["TEAMSPEAK"] = {
-            classname: "TEAMSPEAK",
-            label: "TeamSpeak",
-            sounddata: {
-                discodo: null,
-                message1: null,
-                deafen: "https://cdn.discordapp.com/attachments/747533263341486212/839507475220660304/sound-muted.mp3",
-                undeafen: "https://cdn.discordapp.com/attachments/747533263341486212/839507472595025951/sound-resumed.mp3",
-                mute: "https://cdn.discordapp.com/attachments/747533263341486212/839507482506166272/microphone-muted.mp3",
-                unmute: "https://cdn.discordapp.com/attachments/747533263341486212/839507479951835186/microphone-activated.mp3",
-                disconnect: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
-                ptt_start: null,
-                ptt_stop: null,
-                user_join: "https://cdn.discordapp.com/attachments/747533263341486212/839447031898570752/User_joined_your_channel_sound_xd.mp3",
-                user_leave: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
-                user_moved: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3",
-                call_calling: "https://cdn.discordapp.com/attachments/747533263341486212/839508147885703218/team-speak.mp3",
-                call_ringing: "https://cdn.discordapp.com/attachments/747533263341486212/839508089312247809/hey-wake-up.mp3",
-                stream_started: "https://cdn.discordapp.com/attachments/747533263341486212/839507465107800074/user-in-your-channel-started-recording.mp3",
-                stream_ended: "https://cdn.discordapp.com/attachments/747533263341486212/839507467536695396/user-in-your-channel-stopped-recording.mp3",
-                stream_user_joined: "https://cdn.discordapp.com/attachments/747533263341486212/839447031898570752/User_joined_your_channel_sound_xd.mp3",
-                stream_user_left: "https://cdn.discordapp.com/attachments/747533263341486212/839453090578432030/User_left_your_channel.mp3"
-            }
-        }
-        BdApi.saveData("SoundPack", "packs", data);
-        return data;
+        return packs;
     }
 
     createpack() {
@@ -412,7 +535,7 @@ class SoundPack {
         let data = this.readSoundpacks();
         data[pack.classname] = pack;
 
-        BdApi.saveData("SoundPack", "packs", data);
+        packs = data;
         this.recompilepacks();
     }
 
@@ -526,7 +649,7 @@ tryPackcode() {
 
             data[pack.classname] = pack
 
-            BdApi.saveData("SoundPack", "packs", data);
+            packs = data;
             this.recompilepacks();
             return true;
         } catch {
@@ -565,7 +688,7 @@ tryPackcode() {
 
             data[pack.classname] = pack
 
-            BdApi.saveData("SoundPack", "packs", data);
+            packs = data;
             this.recompilepacks();
             return true;
         } catch {
@@ -594,7 +717,7 @@ tryPackcode() {
             let item = data[key]
             changelogItems.push(ce("h5", {className: `${classes.colorStandard} ${classes.size14} ${classes.h5} ${classes.title} ${classes.defaultMarginh5}`,}, item.label))
             const firstinput = ce("div", {className: `${classes.inputWrapper} ${classes.multiInputFirst}`,}, ce("button", {className: `${classes.inputDefault} ${classes.input} ${classes.multiInputField} ${classes.button} ${classes.lookFilled} ${classes.colorBrand} ${classes.sizeMedium} ${classes.grow}`, onClick: _=> {this.copyToClipboard("BSSPD" + JSON.stringify(item))}}, ce("div", {className: `${classes.contents}`}, "Share")))
-            const lastinput = ce("div", {className: `${classes.inputWrapper} ${classes.multiInputLast}`,}, ce("button", {className: `${classes.inputDefault} ${classes.input} ${classes.multiInputField} ${classes.button} ${classes.lookFilled} ${classes.colorRed} ${classes.sizeMedium} ${classes.grow}`, onClick: _=> {data.splice(data.indexOf(item), 1); BdApi.saveData("SoundPack", "packs", data); this.recompilepacks()}}, ce("div", {className: `${classes.contents}`}, "Remove")))
+            const lastinput = ce("div", {className: `${classes.inputWrapper} ${classes.multiInputLast}`,}, ce("button", {className: `${classes.inputDefault} ${classes.input} ${classes.multiInputField} ${classes.button} ${classes.lookFilled} ${classes.colorRed} ${classes.sizeMedium} ${classes.grow}`, onClick: _=> {data.splice(data.indexOf(item), 1); packs = data; this.recompilepacks()}}, ce("div", {className: `${classes.contents}`}, "Remove")))
             changelogItems.push(ce("div", {className: `${classes.input} ${classes.multiInput}`,}, firstinput, lastinput))
         }
 
@@ -693,138 +816,12 @@ tryPackcode() {
 
 }
 
-const WebpackModules = (() => {
+const MainPack = new SoundPack();
 
-    const req = typeof (webpackJsonp) === "function" ? webpackJsonp([], {
-        '__extra_id__': (module, exports, req) => exports.default = req
-    }, ['__extra_id__']).default : webpackJsonp.push([[], {
-        '__extra_id__': (module, exports, req) => module.exports = req
-    }, [['__extra_id__']]]);
-    delete req.m['__extra_id__'];
-    delete req.c['__extra_id__'];
+const observer = new MutationObserver(changes => {for (let change of changes) {MainPack.observer(change)};})
+observer.observe(document, {childList: true, characterData: true, subtree: true})
 
-    /**
-     * Predicate for searching module
-     * @callback modulePredicate
-     * @param {*} module Module to test
-     * @return {boolean} Returns `true` if `module` matches predicate.
-     */
 
-    /**
-     * Look through all modules of internal Discord's Webpack and return first one that matches filter predicate.
-     * At first this function will look through already loaded modules cache. If no loaded modules match, then this function tries to load all modules and match for them. Loading any module may have unexpected side effects, like changing current locale of moment.js, so in that case there will be a warning the console. If no module matches, this function returns `null`. You should always try to provide a predicate that will match something, but your code should be ready to receive `null` in case of changes in Discord's codebase.
-     * If module is ES6 module and has default property, consider default first; otherwise, consider the full module object.
-     * @param {modulePredicate} filter Predicate to match module
-     * @param {object} [options] Options object.
-     * @param {boolean} [options.cacheOnly=false] Set to `true` if you want to search only the cache for modules.
-     * @return {*} First module that matches `filter` or `null` if none match.
-     */
-    const find = (filter, options = {}) => {
-        const {cacheOnly = true} = options;
-        for (let i in req.c) {
-            if (req.c.hasOwnProperty(i)) {
-                let m = req.c[i].exports;
-                if (m && m.__esModule && m.default && filter(m.default))
-                    return m.default;
-                if (m && filter(m))
-                    return m;
-            }
-        }
-        if (cacheOnly) {
-            console.warn('Cannot find loaded module in cache');
-            return null;
-        }
-        console.warn('Cannot find loaded module in cache. Loading all modules may have unexpected side effects');
-        for (let i = 0; i < req.m.length; ++i) {
-            try {
-                let m = req(i);
-                if (m && m.__esModule && m.default && filter(m.default))
-                    return m.default;
-                if (m && filter(m))
-                    return m;
-            } catch (e) {
-            }
-        }
-        console.warn('Cannot find module');
-        return null;
-    };
-
-    const findAll = (filter, options = {}) => {
-        let list = []
-        const {cacheOnly = true} = options;
-        for (let i in req.c) {
-            if (req.c.hasOwnProperty(i)) {
-                let m = req.c[i].exports;
-                if (m && m.__esModule && m.default && filter(m.default))
-                    list.push(m.default);
-                if (m && filter(m))
-                list.push(m);
-            }
-        }
-        if (cacheOnly && list.length < 1) {
-            console.warn('Cannot find loaded module in cache');
-            return list;
-        }
-        if (list.length >= 1) return list;
-        console.warn('Cannot find loaded module in cache. Loading all modules may have unexpected side effects');
-        for (let i = 0; i < req.m.length; ++i) {
-            try {
-                let m = req(i);
-                if (m && m.__esModule && m.default && filter(m.default))
-                    list.push(m.default);
-                if (m && filter(m))
-                    list.push(m);
-            } catch (e) {
-            }
-        }
-        if (list.length < 1) console.warn('Cannot find module');
-        return list;
-    };
-
-    /**
-     * Look through all modules of internal Discord's Webpack and return first object that has all of following properties. You should be ready that in any moment, after Discord update, this function may start returning `null` (if no such object exists anymore) or even some different object with the same properties. So you should provide all property names that you use, and often even some extra properties to make sure you'll get exactly what you want.
-     * @see Read {@link find} documentation for more details how search works
-     * @param {string[]} propNames Array of property names to look for
-     * @param {object} [options] Options object to pass to {@link find}.
-     * @return {object} First module that matches `propNames` or `null` if none match.
-     */
-    const findByUniqueProperties = (propNames, options) => find(module => propNames.every(prop => module[prop] !== undefined), options);
-
-    /**
-     * Look through all modules of internal Discord's Webpack and return first object that has `displayName` property with following value. This is useful for searching for React components by name. Take into account that not all components are exported as modules. Also, there might be several components with the same name.
-     * @see Use {@link ReactComponents} as another way to get react components
-     * @see Read {@link find} documentation for more details how search works
-     * @param {string} displayName Display name property value to look for
-     * @param {object} [options] Options object to pass to {@link find}.
-     * @return {object} First module that matches `displayName` or `null` if none match.
-     */
-    const findByDisplayName = (displayName, options) => find(module => module.displayName === displayName, options);
-
-    const findConfig = (displayName, options) => {
-        let list = [];
-        for (let module of findAll(module => module["getCurrentConfig"] !== undefined, options)) {
-            if (module.getCurrentConfig({})[displayName] !== undefined) list.push(module);
-        }
-        if (list.length == 1) return list[0]
-        return list
-    }
-
-    return {find, findByUniqueProperties, findByDisplayName, findAll, findConfig, req};
+MainPack.start();
 
 })();
-
-const React = WebpackModules.findByUniqueProperties(['Component', 'PureComponent', 'Children', 'createElement', 'cloneElement']);
-const ce = React.createElement;
-const Markdown = WebpackModules.findByDisplayName("Markdown");
-const classes = Object.assign({}, WebpackModules.findByUniqueProperties(["container", "added"]), WebpackModules.findByUniqueProperties(["justifyCenter"]), WebpackModules.findByUniqueProperties(["userSelectNone"]), WebpackModules.findByUniqueProperties(["flexChild"]), WebpackModules.findByUniqueProperties(["h5"]), WebpackModules.findByUniqueProperties(["colorStandard"]), WebpackModules.findByUniqueProperties(["button"]), WebpackModules.findByUniqueProperties(["size14"]), WebpackModules.findByUniqueProperties(["subtitle", "header"]), WebpackModules.findByUniqueProperties(["soundRow"]), WebpackModules.findByUniqueProperties(["multiInputLast"]), WebpackModules.findByUniqueProperties(["guildInfo"]), WebpackModules.findByUniqueProperties(["inputDefault"]));
-const premadeelements = WebpackModules.findByUniqueProperties(["Child"]);
-const Titles = WebpackModules.findByUniqueProperties(["Tags", "default"]);
-const popuptemplate = WebpackModules.find((m => m.defaultProps && m.defaultProps.selectable == false));
-const modelstack = WebpackModules.findByUniqueProperties(["push", "update", "pop", "popWithKey"]);
-const Direction = WebpackModules.findByUniqueProperties(["Direction"]).Direction
-const resolveElement = function(node) {try {if (!(node instanceof window.jQuery) && !(node instanceof Element)) return undefined; return node instanceof window.jQuery ? node[0] : node;}catch {return node;}}
-const getReactInstance = function (node) {
-    const domNode = resolveElement(node);
-    if (!(domNode instanceof Element)) return undefined;
-    return domNode[Object.keys(domNode).find((key) => key.startsWith("__reactInternalInstance") || key.startsWith("__reactFiber"))];
-}
